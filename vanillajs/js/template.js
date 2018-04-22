@@ -35,7 +35,7 @@
 		+		'<div class="view">'
 		+			'<input class="toggle" type="checkbox" {{checked}}>'
 		+			'<label>{{title}}</label>'
-		+			'<input class="focus" type="checkbox" {{checkedFocus}}>'
+		+			'{{focusCheckbox}}'
 		+			'<button class="destroy"></button>'
 		+		'</div>'
 		+	'</li>';
@@ -66,7 +66,6 @@
 			var template = this.defaultTemplate;
 			var completed = '';
 			var checked = '';
-      var checkedFocus = data[i].focusMode ? 'checked' : '';
 
 			if (data[i].completed) {
 				completed = 'completed';
@@ -77,6 +76,13 @@
 			template = template.replace('{{title}}', escape(data[i].title));
 			template = template.replace('{{completed}}', completed);
 			template = template.replace('{{checked}}', checked);
+
+      const focusCheckbox = !data[i].completed 
+        ? '<input class="focus" type="checkbox" {{checkedFocus}}>'
+        : '<input class="focus hidden" type="checkbox" {{checkedFocus}}>'
+      template = template.replace('{{focusCheckbox}}', focusCheckbox)
+
+      var checkedFocus = data[i].focusMode ? 'checked' : '';
       template = template.replace('{{checkedFocus}}', checkedFocus);
 
 			view = view + template;

@@ -57,6 +57,7 @@
 
 		// In case it was toggled from an event and not by clicking the checkbox
 		qs('input.toggle', listItem).checked = completed;
+    qs('input.focus', listItem).className = completed ? 'focus hidden' : 'focus'
 	};
 
 	View.prototype._renderFocusMode = function (id, focusMode) {

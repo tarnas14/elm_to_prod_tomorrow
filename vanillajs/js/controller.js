@@ -13,6 +13,11 @@
 		self.model = model;
 		self.view = view;
 
+    // oh so dirty hack
+    window.setDone = (id) => {
+      self.toggleComplete(id, true) 
+    }
+
 		self.view.bind('newTodo', function (title) {
 			self.addItem(title);
 		});
@@ -190,6 +195,7 @@
       // send data to elm
       // ??
       console.log(data)
+      window.focusOn(data)
       // remove focusMode
       data.forEach(function (item) {
         self.focusModeToggle(item.id, false)
