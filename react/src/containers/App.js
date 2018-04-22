@@ -8,7 +8,6 @@ import * as TodoActions from '../actions'
 
 const App = ({todos, actions}) => (
   <div>
-    <div><button className="focus-mode">go to focus mode</button></div>
     <Header addTodo={actions.addTodo} />
     <MainSection todos={todos} actions={actions} />
   </div>

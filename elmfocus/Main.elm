@@ -1,9 +1,8 @@
 port module Main exposing (..)
 
 import Html exposing (Html, div, button, text, br)
-import Html.Attributes exposing (class)
+import Html.Attributes exposing (style)
 import Html.Events exposing (onClick)
-import Json.Decode as Decode
 
 ---- MODEL ----
 
@@ -47,7 +46,9 @@ view model =
     if List.isEmpty model.todos then
       div [] []
     else 
-    Html.ul [class "Focus"] <| showTodos model.todos
+    Html.ul [
+      style [("margin", "0"), ("position", "fixed"), ("top", "0"), ("left", "0"), ("right", "0"), ("bottom", "0"), ("backgroundColor", "white"), ("zIndex", "9001")]
+    ] <| showTodos model.todos
           
 
 showTodos: (List Todo) -> List (Html Msg)

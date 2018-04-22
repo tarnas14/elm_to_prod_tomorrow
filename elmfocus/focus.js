@@ -8368,7 +8368,40 @@ var _user$project$Main$view = function (model) {
 		_elm_lang$html$Html$ul,
 		{
 			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$class('Focus'),
+			_0: _elm_lang$html$Html_Attributes$style(
+				{
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'margin', _1: '0'},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: 'position', _1: 'fixed'},
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'top', _1: '0'},
+							_1: {
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'left', _1: '0'},
+								_1: {
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'right', _1: '0'},
+									_1: {
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'bottom', _1: '0'},
+										_1: {
+											ctor: '::',
+											_0: {ctor: '_Tuple2', _0: 'backgroundColor', _1: 'white'},
+											_1: {
+												ctor: '::',
+												_0: {ctor: '_Tuple2', _0: 'zIndex', _1: '9001'},
+												_1: {ctor: '[]'}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}),
 			_1: {ctor: '[]'}
 		},
 		_user$project$Main$showTodos(model.todos));

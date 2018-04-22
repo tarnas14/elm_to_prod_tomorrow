@@ -20,6 +20,11 @@ export const getVisibleTodos = createSelector(
   }
 )
 
+export const getFocusedTodos = createSelector(
+  [getTodos],
+  todos => todos.filter(t => t.focused).map(todo => ({...todo, title: todo.text}))
+)
+
 export const getCompletedTodoCount = createSelector(
   [getTodos],
   todos => (
