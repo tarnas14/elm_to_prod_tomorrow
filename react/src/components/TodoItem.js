@@ -8,7 +8,8 @@ export default class TodoItem extends Component {
     todo: PropTypes.object.isRequired,
     editTodo: PropTypes.func.isRequired,
     deleteTodo: PropTypes.func.isRequired,
-    completeTodo: PropTypes.func.isRequired
+    completeTodo: PropTypes.func.isRequired,
+    focusTodo: PropTypes.func.isRequired,
   }
 
   state = {
@@ -29,7 +30,7 @@ export default class TodoItem extends Component {
   }
 
   render() {
-    const { todo, completeTodo, deleteTodo } = this.props
+    const { todo, completeTodo, deleteTodo, focusTodo } = this.props
 
     let element
     if (this.state.editing) {
@@ -48,6 +49,10 @@ export default class TodoItem extends Component {
           <label onDoubleClick={this.handleDoubleClick}>
             {todo.text}
           </label>
+          {!todo.completed && <input className="focus"
+            type="checkbox"
+            checked={todo.focused}
+            onChange={() => focusTodo(todo.id)} />}
           <button className="destroy"
                   onClick={() => deleteTodo(todo.id)} />
         </div>

@@ -4,13 +4,15 @@ import {
   EDIT_TODO,
   COMPLETE_TODO,
   COMPLETE_ALL_TODOS,
-  CLEAR_COMPLETED
+  CLEAR_COMPLETED,
+  FOCUS_TODO
 } from '../constants/ActionTypes'
 
 const initialState = [
   {
     text: 'Use Redux',
     completed: false,
+    focused: false,
     id: 0
   }
 ]
@@ -23,6 +25,7 @@ export default function todos(state = initialState, action) {
         {
           id: state.reduce((maxId, todo) => Math.max(todo.id, maxId), -1) + 1,
           completed: false,
+          focused: false,
           text: action.text
         }
       ]
@@ -43,6 +46,13 @@ export default function todos(state = initialState, action) {
       return state.map(todo =>
         todo.id === action.id ?
           { ...todo, completed: !todo.completed } :
+          todo
+      )
+
+    case FOCUS_TODO:
+      return state.map(todo =>
+        todo.id === action.id ?
+          { ...todo, focused: !todo.focused } :
           todo
       )
 
