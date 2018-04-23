@@ -46,15 +46,25 @@ view model =
     if List.isEmpty model.todos then
       div [] []
     else 
-    Html.ul [
-      style [("margin", "0"), ("position", "fixed"), ("top", "0"), ("left", "0"), ("right", "0"), ("bottom", "0"), ("backgroundColor", "white"), ("zIndex", "9001")]
-    ] <| showTodos model.todos
-          
+    Html.div [
+      style [ ("position", "fixed"), ("top", "0"), ("left", "0"), ("right", "0"), ("bottom", "0"), ("backgroundColor", "white"), ("zIndex", "9001")]] [
+      Html.ul [ style[
+        ("margin", "0"),
+        ("listStyleType", "none"),
+        ("width", "50%"),
+        ("margin", "2em auto"),
+        ("textAlign", "center"),
+        ("fontSize", "2em")
+      ] ] <| showTodos model.todos ]
 
 showTodos: (List Todo) -> List (Html Msg)
-showTodos todos = todos |> List.map (\todo -> Html.li [] [
-  todo.title |> text,
-  Html.span [onClick <| Done todo.id] [" ->x<-" |> text] ])
+showTodos todos = todos |> List.map showTodo 
+          
+showTodo: Todo -> Html Msg
+showTodo todo = Html.li [
+    style [("marginBottom", "1em"), ("color", "#988e9e")],
+    onClick <| Done todo.id
+  ] [ todo.title |> text ]
 
 ---- PROGRAM ----
 

@@ -8329,72 +8329,68 @@ var _user$project$Main$subscriptions = function (model) {
 var _user$project$Main$Done = function (a) {
 	return {ctor: 'Done', _0: a};
 };
-var _user$project$Main$showTodos = function (todos) {
+var _user$project$Main$showTodo = function (todo) {
 	return A2(
-		_elm_lang$core$List$map,
-		function (todo) {
-			return A2(
-				_elm_lang$html$Html$li,
-				{ctor: '[]'},
+		_elm_lang$html$Html$li,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$style(
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html$text(todo.title),
+					_0: {ctor: '_Tuple2', _0: 'marginBottom', _1: '1em'},
 					_1: {
 						ctor: '::',
-						_0: A2(
-							_elm_lang$html$Html$span,
-							{
-								ctor: '::',
-								_0: _elm_lang$html$Html_Events$onClick(
-									_user$project$Main$Done(todo.id)),
-								_1: {ctor: '[]'}
-							},
-							{
-								ctor: '::',
-								_0: _elm_lang$html$Html$text(' ->x<-'),
-								_1: {ctor: '[]'}
-							}),
+						_0: {ctor: '_Tuple2', _0: 'color', _1: '#988e9e'},
 						_1: {ctor: '[]'}
 					}
-				});
+				}),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$html$Html_Events$onClick(
+					_user$project$Main$Done(todo.id)),
+				_1: {ctor: '[]'}
+			}
 		},
-		todos);
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html$text(todo.title),
+			_1: {ctor: '[]'}
+		});
+};
+var _user$project$Main$showTodos = function (todos) {
+	return A2(_elm_lang$core$List$map, _user$project$Main$showTodo, todos);
 };
 var _user$project$Main$view = function (model) {
 	return _elm_lang$core$List$isEmpty(model.todos) ? A2(
 		_elm_lang$html$Html$div,
 		{ctor: '[]'},
 		{ctor: '[]'}) : A2(
-		_elm_lang$html$Html$ul,
+		_elm_lang$html$Html$div,
 		{
 			ctor: '::',
 			_0: _elm_lang$html$Html_Attributes$style(
 				{
 					ctor: '::',
-					_0: {ctor: '_Tuple2', _0: 'margin', _1: '0'},
+					_0: {ctor: '_Tuple2', _0: 'position', _1: 'fixed'},
 					_1: {
 						ctor: '::',
-						_0: {ctor: '_Tuple2', _0: 'position', _1: 'fixed'},
+						_0: {ctor: '_Tuple2', _0: 'top', _1: '0'},
 						_1: {
 							ctor: '::',
-							_0: {ctor: '_Tuple2', _0: 'top', _1: '0'},
+							_0: {ctor: '_Tuple2', _0: 'left', _1: '0'},
 							_1: {
 								ctor: '::',
-								_0: {ctor: '_Tuple2', _0: 'left', _1: '0'},
+								_0: {ctor: '_Tuple2', _0: 'right', _1: '0'},
 								_1: {
 									ctor: '::',
-									_0: {ctor: '_Tuple2', _0: 'right', _1: '0'},
+									_0: {ctor: '_Tuple2', _0: 'bottom', _1: '0'},
 									_1: {
 										ctor: '::',
-										_0: {ctor: '_Tuple2', _0: 'bottom', _1: '0'},
+										_0: {ctor: '_Tuple2', _0: 'backgroundColor', _1: 'white'},
 										_1: {
 											ctor: '::',
-											_0: {ctor: '_Tuple2', _0: 'backgroundColor', _1: 'white'},
-											_1: {
-												ctor: '::',
-												_0: {ctor: '_Tuple2', _0: 'zIndex', _1: '9001'},
-												_1: {ctor: '[]'}
-											}
+											_0: {ctor: '_Tuple2', _0: 'zIndex', _1: '9001'},
+											_1: {ctor: '[]'}
 										}
 									}
 								}
@@ -8404,7 +8400,43 @@ var _user$project$Main$view = function (model) {
 				}),
 			_1: {ctor: '[]'}
 		},
-		_user$project$Main$showTodos(model.todos));
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$ul,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$style(
+						{
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'margin', _1: '0'},
+							_1: {
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'listStyleType', _1: 'none'},
+								_1: {
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'width', _1: '50%'},
+									_1: {
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'margin', _1: '2em auto'},
+										_1: {
+											ctor: '::',
+											_0: {ctor: '_Tuple2', _0: 'textAlign', _1: 'center'},
+											_1: {
+												ctor: '::',
+												_0: {ctor: '_Tuple2', _0: 'fontSize', _1: '2em'},
+												_1: {ctor: '[]'}
+											}
+										}
+									}
+								}
+							}
+						}),
+					_1: {ctor: '[]'}
+				},
+				_user$project$Main$showTodos(model.todos)),
+			_1: {ctor: '[]'}
+		});
 };
 var _user$project$Main$main = _elm_lang$html$Html$program(
 	{view: _user$project$Main$view, init: _user$project$Main$init, update: _user$project$Main$update, subscriptions: _user$project$Main$subscriptions})();
