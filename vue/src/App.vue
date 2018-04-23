@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-    <div id="focus-mode"></div>
+    <FocusMode :ports="setupPorts"></FocusMode>
     <tab-bar @filter="onFilter" :colors="colors"></tab-bar>
     <ul>
     <item v-for="item in todoList.filter((x) => filter === 'all' ? x : filter === 'starred' ? x.starred : filter === x.color)"
@@ -18,8 +18,7 @@ import Item from './Item.vue'
 import TabBar from './TabBar.vue'
 import AddForm from './AddForm.vue'
 import {Main} from './elmfocus/Main.elm'
-
-console.log(Main)
+import * as ElmComponent from './elm.js'
 
 let startArray = [
   {text: 'Add Todo Items with the + Button', color: 'ice',
@@ -31,15 +30,11 @@ let startArray = [
    {text: 'All Saved in Local Browser Storage', color: 'ice', checked: true, starred: false, id: 4}
 ]
 
-let elmApp
-
 export default  {
   props: ['stored-id', 'stored-data'],
-  components: { AddForm, Item, TabBar },
-  mounted: function () {
-    const node = document.getElementById('focus-mode')
-    elmApp = Main.embed(node)
-    elmApp.ports.done.subscribe(id => this.onCheck(id, true))
+  components: {
+    AddForm, Item, TabBar,
+    FocusMode: ElmComponent(Main)
   },
   data: function(){
     return {
@@ -57,6 +52,12 @@ export default  {
     }
   },
   methods: {
+    setupPorts: function (ports) {
+      ports.done.subscribe((id) => {
+        this.onCheck(id, true)
+      })
+      this.ports = ports
+    },
     onFilter: function(filter){
       this.filter = filter
       if(filter !== 'all' && filter !== 'starred'){
@@ -80,7 +81,7 @@ export default  {
       el.focused = !el.focused
     },
     focus: function(){
-      elmApp.ports.todos.send(this.todoList.filter(todo => todo.focused).map(todo => Object.assign({}, todo, {title: todo.text})))
+      this.ports.todos.send(this.todoList.filter(todo => todo.focused).map(todo => Object.assign({}, todo, {title: todo.text})))
     },
     onStarChange: function(id){
       let el = this.todoList.find((x) => x.id === id)
