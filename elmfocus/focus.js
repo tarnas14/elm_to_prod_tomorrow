@@ -8337,11 +8337,19 @@ var _user$project$Main$showTodo = function (todo) {
 			_0: _elm_lang$html$Html_Attributes$style(
 				{
 					ctor: '::',
-					_0: {ctor: '_Tuple2', _0: 'marginBottom', _1: '1em'},
+					_0: {ctor: '_Tuple2', _0: 'margin', _1: '0'},
 					_1: {
 						ctor: '::',
-						_0: {ctor: '_Tuple2', _0: 'color', _1: '#988e9e'},
-						_1: {ctor: '[]'}
+						_0: {ctor: '_Tuple2', _0: 'marginBottom', _1: '1em'},
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'color', _1: '#988e9e'},
+							_1: {
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'padding', _1: '0'},
+								_1: {ctor: '[]'}
+							}
+						}
 					}
 				}),
 			_1: {
@@ -8403,39 +8411,63 @@ var _user$project$Main$view = function (model) {
 		{
 			ctor: '::',
 			_0: A2(
-				_elm_lang$html$Html$ul,
+				_elm_lang$html$Html$h2,
 				{
 					ctor: '::',
 					_0: _elm_lang$html$Html_Attributes$style(
 						{
 							ctor: '::',
-							_0: {ctor: '_Tuple2', _0: 'margin', _1: '0'},
+							_0: {ctor: '_Tuple2', _0: 'textAlign', _1: 'center'},
 							_1: {
 								ctor: '::',
-								_0: {ctor: '_Tuple2', _0: 'listStyleType', _1: 'none'},
-								_1: {
-									ctor: '::',
-									_0: {ctor: '_Tuple2', _0: 'width', _1: '50%'},
-									_1: {
-										ctor: '::',
-										_0: {ctor: '_Tuple2', _0: 'margin', _1: '2em auto'},
-										_1: {
-											ctor: '::',
-											_0: {ctor: '_Tuple2', _0: 'textAlign', _1: 'center'},
-											_1: {
-												ctor: '::',
-												_0: {ctor: '_Tuple2', _0: 'fontSize', _1: '2em'},
-												_1: {ctor: '[]'}
-											}
-										}
-									}
-								}
+								_0: {ctor: '_Tuple2', _0: 'color', _1: '#988e9e'},
+								_1: {ctor: '[]'}
 							}
 						}),
 					_1: {ctor: '[]'}
 				},
-				_user$project$Main$showTodos(model.todos)),
-			_1: {ctor: '[]'}
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text('Focus mode, there is not escape'),
+					_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$ul,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$style(
+							{
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'padding', _1: '0'},
+								_1: {
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'listStyleType', _1: 'none'},
+									_1: {
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'width', _1: '50%'},
+										_1: {
+											ctor: '::',
+											_0: {ctor: '_Tuple2', _0: 'margin', _1: '2em auto'},
+											_1: {
+												ctor: '::',
+												_0: {ctor: '_Tuple2', _0: 'textAlign', _1: 'center'},
+												_1: {
+													ctor: '::',
+													_0: {ctor: '_Tuple2', _0: 'fontSize', _1: '2em'},
+													_1: {ctor: '[]'}
+												}
+											}
+										}
+									}
+								}
+							}),
+						_1: {ctor: '[]'}
+					},
+					_user$project$Main$showTodos(model.todos)),
+				_1: {ctor: '[]'}
+			}
 		});
 };
 var _user$project$Main$main = _elm_lang$html$Html$program(

@@ -48,8 +48,9 @@ view model =
     else 
     Html.div [
       style [ ("position", "fixed"), ("top", "0"), ("left", "0"), ("right", "0"), ("bottom", "0"), ("backgroundColor", "white"), ("zIndex", "9001")]] [
+      Html.h2 [ style[("textAlign", "center"), ("color", "#988e9e")] ] [ "Focus mode, there is not escape" |> text],
       Html.ul [ style[
-        ("margin", "0"),
+        ("padding", "0"),
         ("listStyleType", "none"),
         ("width", "50%"),
         ("margin", "2em auto"),
@@ -62,7 +63,7 @@ showTodos todos = todos |> List.map showTodo
           
 showTodo: Todo -> Html Msg
 showTodo todo = Html.li [
-    style [("marginBottom", "1em"), ("color", "#988e9e")],
+    style [("margin", "0"), ("marginBottom", "1em"), ("color", "#988e9e"), ("padding", "0")],
     onClick <| Done todo.id
   ] [ todo.title |> text ]
 
