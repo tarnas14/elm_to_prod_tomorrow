@@ -9,13 +9,13 @@
           @click="onStarChange">{{ starred ? 'unstar' : 'star'}}</li>
       <li class="h-txt rose-txt remove-btn"
           @click="onRemove">remove</li>
-      <li class="h-txt jewel-txt" @click="onFocus">focus</li>
+      <li v-if="!checked" class="h-txt jewel-txt" @click="onFocus">focus</li>
     </ul>
 </template>
 
 <script>
 export default {
-  props: ['active', 'colors', 'data-id', 'starred'],
+  props: ['active', 'checked', 'colors', 'data-id', 'starred'],
   template: ``,
   data: function(){
     return {

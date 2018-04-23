@@ -16,11 +16,12 @@
                 :data-activates="menuId" @click="toggleActive">
             more_vert
           </span>
+          <span v-if="data.focused">focus!</span>
         <span v-if="data.starred"
               class="material-icons right sun-txt head-info">
             grade
         </span>
-        <item-menu :data-id="data.id" :active="active" :starred="data.starred" :colors="colors"
+        <item-menu :data-id="data.id" :checked="data.checked" :active="active" :starred="data.starred" :colors="colors"
                               @mouseleave="onMouseLeave"
                               @new-color="onNewColor" @color-change="onColorChange"
                               @star-change="onStarChange" @remove="onRemove" @focus="onFocus">

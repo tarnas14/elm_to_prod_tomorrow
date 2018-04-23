@@ -1,5 +1,6 @@
 <template lang="html">
   <div>
+    <div id="focus-mode"></div>
     <tab-bar @filter="onFilter" :colors="colors"></tab-bar>
     <ul>
     <item v-for="item in todoList.filter((x) => filter === 'all' ? x : filter === 'starred' ? x.starred : filter === x.color)"
@@ -16,20 +17,30 @@
 import Item from './Item.vue'
 import TabBar from './TabBar.vue'
 import AddForm from './AddForm.vue'
+import {Main} from './elmfocus/Main.elm'
+
+console.log(Main)
 
 let startArray = [
   {text: 'Add Todo Items with the + Button', color: 'ice',
-  checked: false, starred: false, id: 1},
+  checked: false, focused: false, starred: false, id: 1},
   {text: 'Star Items for Priority', color: 'jewel',
-   checked: true, starred: true, id: 2 },
+   checked: true, focused: false, starred: true, id: 2 },
   {text: 'Filter Items by Color or Star', color: 'tang',
-   checked: false, starred: true, id: 3 },
+   checked: false, focused: false, starred: true, id: 3 },
    {text: 'All Saved in Local Browser Storage', color: 'ice', checked: true, starred: false, id: 4}
 ]
+
+let elmApp
 
 export default  {
   props: ['stored-id', 'stored-data'],
   components: { AddForm, Item, TabBar },
+  mounted: function () {
+    const node = document.getElementById('focus-mode')
+    elmApp = Main.embed(node)
+    elmApp.ports.done.subscribe(id => this.onCheck(id, true))
+  },
   data: function(){
     return {
       colors: ['all', 'ice', 'tang', 'jewel', 'rose'],
@@ -52,9 +63,10 @@ export default  {
         this.recentColor = filter
       }
     },
-    onCheck: function(id){
+    onCheck: function(id, force){
       let el = this.todoList.find((x) => x.id === id)
-      el.checked = !el.checked
+      el.checked = force || !el.checked
+      el.focused = !el.checked && el.focused
     },
     onColorChange: function(id){
       let el = this.todoList.find((x) => x.id === id)
@@ -64,10 +76,11 @@ export default  {
       this.recentColor = color
     },
     onFocus: function(id){
-      console.log('focus', id)
+      let el = this.todoList.find((x) => x.id === id)
+      el.focused = !el.focused
     },
     focus: function(){
-      console.log('go focus')
+      elmApp.ports.todos.send(this.todoList.filter(todo => todo.focused).map(todo => Object.assign({}, todo, {title: todo.text})))
     },
     onStarChange: function(id){
       let el = this.todoList.find((x) => x.id === id)
