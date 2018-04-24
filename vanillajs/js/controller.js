@@ -13,10 +13,9 @@
 		self.model = model;
 		self.view = view;
 
-    // oh so dirty hack
-    window.setDone = (id) => {
-      self.toggleComplete(id, true) 
-    }
+    window.focusMode.done.subscribe(id => {
+      self.toggleComplete(id, true)
+    });
 
 		self.view.bind('newTodo', function (title) {
 			self.addItem(title);
@@ -194,8 +193,7 @@
 		self.model.read({ focusMode: true }, function (data) {
       // send data to elm
       // ??
-      console.log(data)
-      window.focusOn(data)
+      window.focusMode.todos.send(data)
       // remove focusMode
       data.forEach(function (item) {
         self.focusModeToggle(item.id, false)

@@ -4,6 +4,10 @@ FROM: https://github.com/tastejs/todomvc/tree/gh-pages/examples/vanillajs
 
 # how to add elm
 
+basically just build your elm component and reference it in your html
+you can save the elm app in `window.` scope for easy access in the rest of your JS app
+(or just ports, because why would you need anything else)
+
 ---
 
 # original readme
