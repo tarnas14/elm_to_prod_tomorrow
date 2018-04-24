@@ -1,5 +1,9 @@
 {
   "private": true,
+  "scripts": {
+    "build": "cd ./elmfocus elm-make Main.elm --output focus.js",
+    "start": "xdg-open index.html"
+  },
   "dependencies": {
     "todomvc-common": "^1.0.1",
     "todomvc-app-css": "^2.0.1"
