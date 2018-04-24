@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "build": "cd ./elmfocus elm-make Main.elm --output focus.js",
+    "build": "cd ./elmfocus npm run build",
     "start": "xdg-open index.html"
   },
   "dependencies": {

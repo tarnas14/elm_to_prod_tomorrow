@@ -4,8 +4,10 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
+    "build-elm": "cd ./src/elmfocus && npm run build",
+    "prestart": "npm run build-elm",
     "start": "webpack-dev-server --port=4200",
-    "build": "webpack --display-error-details",
+    "build": "npm run build-elm && webpack --display-error-details",
     "test": "karma start ./karma.conf.js",
     "lint": "ng lint",
     "e2e": "protractor ./protractor.conf.js",

@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en" data-framework="javascript">
+	<head>
+		<meta charset="utf-8">
+	</head>
+	<body>
+    <div id="focus-app"></div>
+    <script src="./focus.js"></script>
+    <script>
+      const node = document.getElementById('focus-app')
+      const elmApp = Elm.Main.embed(node);
+
+      elmApp.ports.done.subscribe(console.log.bind(null, 'todo done:'))
+      window.focusMode = elmApp.ports
+    </script>
+	</body>
+</html>

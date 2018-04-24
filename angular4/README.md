@@ -1,3 +1,18 @@
+# elm to production
+
+FROM: https://github.com/addyosmani/todomvc-angular-4
+
+# how to add elm
+
+I wish we could just add [elm-webpack-loader](https://github.com/elm-community/elm-webpack-loader)
+but it doesn't work (probably because of some TS loading magic)
+
+that's why we are falling back to building elm into js and using that like peasants
+
+---
+
+# original readme
+
 # TodoApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0.
