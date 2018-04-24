@@ -1,3 +1,18 @@
+# elm to production
+
+FROM: https://github.com/reactjs/redux/tree/master/examples/todomvc
+
+# how to add elm
+
+all you need is [elm-webpack-loader](https://github.com/elm-community/elm-webpack-loader)
+
+and some code additional code in './src/elm.jsx' if you want a component to render your app in
+(this is not necessary, it's just some sugar to embed elm automatically and not duplicate code everywhere you use elm components)
+
+---
+
+# original readme
+
 # Redux TodoMVC Example
 
 This project template was built with [Create React App](https://github.com/facebookincubator/create-react-app), which provides a simple way to start React projects with no build configuration needed.

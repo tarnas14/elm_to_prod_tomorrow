@@ -1,22 +1,25 @@
-var React = require('react');
+import React from 'react'
 
-module.exports = class extends React.Component {
+export default class extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
 
-    this.initialize = this.initialize.bind(this);
+    this.initialize = this.initialize.bind(this)
   }
 
   shouldComponentUpdate() {
-    return false;
+    return false
   }
 
   initialize(node) {
-    if (node === null) return;
-    var app = this.props.src.embed(node, this.props.flags);
+    if (!node === null) {
+      return
+    }
+
+    const app = this.props.src.embed(node, this.props.flags)
 
     if (typeof this.props.ports !== 'undefined') {
-      this.props.ports(app.ports);
+      this.props.ports(app.ports)
     }
   }
 

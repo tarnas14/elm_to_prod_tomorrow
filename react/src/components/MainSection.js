@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Footer from './Footer'
 import VisibleTodoList from '../containers/VisibleTodoList'
 import {Main} from '../elmfocus/Main.elm'
-import Elm from '../elm'
+import Elm from '../elm.jsx'
 
 let portsSuperState
 
