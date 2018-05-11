@@ -5,11 +5,11 @@ import VisibleTodoList from '../containers/VisibleTodoList'
 import {Main} from '../elmfocus/Main.elm'
 import Elm from '../elm.jsx'
 
-let portsSuperState
+let portsState
 
 const setupPorts = (actions) => (ports) => {
   ports.done.subscribe(actions.completeTodo)
-  portsSuperState = ports
+  portsState = ports
 }
 
 const MainSection = ({ focusedTodos, todosCount, completedCount, actions }) =>
@@ -22,7 +22,7 @@ const MainSection = ({ focusedTodos, todosCount, completedCount, actions }) =>
         backgroundColor: 'white',
         zIndex: 9001,
       }} />
-      <div><button onClick={() => portsSuperState.todos.send(focusedTodos)} className="focus-mode">go to focus mode</button></div>
+      <div><button onClick={() => portsState.todos.send(focusedTodos)} className="focus-mode">go to focus mode</button></div>
       <section className="main">
         {
           !!todosCount && 

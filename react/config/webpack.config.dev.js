@@ -122,7 +122,7 @@ module.exports = {
         ],
         include: paths.appSrc,
       },
-      {
+    {
         test: /\.elm$/,
         exclude: [/elm-stuff/, /node_modules/],
         use: {

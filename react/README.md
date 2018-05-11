@@ -1,50 +1,82 @@
-# elm to production
+# React & Redux - elm to production
 
-FROM: https://github.com/reactjs/redux/tree/master/examples/todomvc
+FROM: [https://github.com/reactjs/redux/tree/master/examples/todomvc](https://github.com/reactjs/redux/tree/master/examples/todomvc)
 
 # how to add elm
 
-all you need is [elm-webpack-loader](https://github.com/elm-community/elm-webpack-loader)
+- add [elm-webpack-loader](https://github.com/elm-community/elm-webpack-loader) to your project and webpack config [./config/webpack.config.prod.js](./config/webpack.config.prod.js)
+  ```
+  npm i -S elm-webpack-loader
+  ```
+  ```javascript
+  // webpack 2
+  module.exports = {
+    module: {
+      rules: [
+        ...
+        {
+          test: /\.elm$/,
+          exclude: [/elm-stuff/, /node_modules/],
+          use: {
+            loader: 'elm-webpack-loader',
+            options: {}
+          }
+        },
+    }
+  }
+  ```
+- [OPTIONAL] create a wrapper around elm embed [./src/elm.jsx](./src/elm.jsx)
+  ```javascript
+  import React from 'react'
 
-and some code additional code in './src/elm.jsx' if you want a component to render your app in
-(this is not necessary, it's just some sugar to embed elm automatically and not duplicate code everywhere you use elm components)
+  export default class extends React.Component {
+    constructor(props) {
+      super(props)
 
----
+      this.initialize = this.initialize.bind(this)
+    }
 
-# original readme
+    shouldComponentUpdate() {
+      return false
+    }
 
-# Redux TodoMVC Example
+    initialize(node) {
+      if (!node === null) {
+        return
+      }
 
-This project template was built with [Create React App](https://github.com/facebookincubator/create-react-app), which provides a simple way to start React projects with no build configuration needed.
+      const app = this.props.src.embed(node, this.props.flags)
 
-Projects built with Create-React-App include support for ES6 syntax, as well as several unofficial / not-yet-final forms of Javascript syntax such as Class Properties and JSX.  See the list of [language features and polyfills supported by Create-React-App](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#supported-language-features-and-polyfills) for more information.
+      if (typeof this.props.ports !== 'undefined') {
+        this.props.ports(app.ports)
+      }
+    }
 
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+    render() {
+      return React.createElement('div', { ref: this.initialize });
+    }
+  }
+  ```
+- import your elm component and use it [./src/components/MainSection.js](./src/components/MainSection.js)
+  ```javascript
+  import {Main} from '../elmfocus/Main.elm'
+  import Elm from '../elm.jsx'
+  ```
+  ```javascript
+  <Elm src={Main} ports={setupPorts(actions)}/>
+  ```
+  ```javascript
+  let portsState
+  const setupPorts = (actions) => (ports) => {
+    ports.done.subscribe(actions.completeTodo)
+    portsState = ports
+  }
+  ```
+  ```html
+  <div>
+    <button
+      onClick={() => portsState.todos.send(focusedTodos)}
+      className="focus-mode"
+    >go to focus mode</button>
+  </div>
+  ```
