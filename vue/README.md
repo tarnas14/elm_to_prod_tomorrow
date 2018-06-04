@@ -1,32 +1,77 @@
-# elm to production
+# Vue.js elm to production
 
-FROM: https://github.com/margaret2/vue-todo-list
+FROM: [https://github.com/margaret2/vue-todo-list](https://github.com/margaret2/vue-todo-list)
 
 # how to add elm
 
-all you need is [elm-webpack-loader](https://github.com/elm-community/elm-webpack-loader)
+- add [elm-webpack-loader](https://github.com/elm-community/elm-webpack-loader) to your project and webpack config [./webpack.config.js:13](./webpack.config.js)
+  ```
+  npm i -S elm-webpack-loader
+  ```
+  ```javascript
+  // webpack 2
+  module.exports = {
+    module: {
+      rules: [
+        ...
+        {
+          test: /\.elm$/,
+          exclude: [/elm-stuff/, /node_modules/],
+          use: {
+            loader: 'elm-webpack-loader',
+            options: {}
+          }
+        },
+      ]
+    },
+  }
+  ```
+- [OPTIONAL] create a vue component wrapper around elm embed [./src/elm.js](./src/elm.js)
+  ```javascript
+  module.exports = function (elm) {
+    return {
+      props: {
+        ports: {
+          type: Function,
+          required: false
+        },
+        flags: {
+          type: Object,
+          required: false
+        }
+      },
+      render: function (createElement, _context) {
+        return createElement('div')
+      },
+      mounted: function () {
+        var node = this.$el
+        var app = elm.embed(node, this.$props.flags)
 
-and some code additional code in './src/elm.js' if you want a component to render your app in
-(this is not necessary, it's just some sugar to embed elm automatically and not duplicate code everywhere you use elm components)
-
----
-
-# original readme
-# todo2
-
-> A Vue.js project
-
-## Build Setup
-
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-```
-
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
+        if (this.$props.ports) {
+          this.$props.ports(app.ports);
+        }
+      }
+    }
+  }
+  ```
+- import your elm component and use it in vue code [./src/App.vue](./src/App.vue)
+  ```javascript
+  import {Main} from './elmfocus/Main.elm'
+  import * as ElmComponent from './elm.js'
+  ```
+  ```javascript
+  components: {
+    FocusMode: ElmComponent(Main)
+  },
+  methods: {
+    setupPorts: function (ports) {
+      ports.done.subscribe((id) => {
+        this.onCheck(id, true)
+      })
+      this.ports = ports
+    },
+  }
+  ```
+  ```html
+  <FocusMode :ports="setupPorts"></FocusMode>
+  ```
