@@ -1,43 +1,63 @@
-# elm to production
+# Angular4 - elm to production
 
-FROM: https://github.com/addyosmani/todomvc-angular-4
+FROM: [https://github.com/addyosmani/todomvc-angular-4](https://github.com/addyosmani/todomvc-angular-4)
 
 # how to add elm
 
 I wish we could just add [elm-webpack-loader](https://github.com/elm-community/elm-webpack-loader)
 but it doesn't work (probably because of some TS loading magic)
 
-that's why we are falling back to building elm into js and using that like peasants
+that's why we are falling back to building elm into js and using that like peasants:
 
----
+- build the elm component (added it to npm scripts)
+  ```javascript
+  "scripts": {
+    "build-elm": "cd ./src/elmfocus && npm run build", // does elm-make Main.elm --output focus.js
+    "prestart": "npm run build-elm",
+    ...
+  }
+  ```
+- configure TS to allow regular javascript imports
+  ```
+  // ./src/tsconfig.app.json
+  {
+    "compilerOptions": {
+      "allowJs": true,
+      "types": ["node"]
+    }
+  }
+  ```
+- import built elm component [./src/app/app.component.ts](./src/app/app.component.ts)
+  ```javascript
+  const Elm = require('../elmfocus/focus.js');
+  ```
+- hook up elm ports in your angular application logic [./src/app/app.component.ts](./src/app/app.component.ts)
+  ```javascript
+  let elmApp
+  // ...
+  export class AppComponent implements AfterContentInit {
+    // rest of the logic
 
-# original readme
+    focus() {
+      elmApp.ports.todos.send(this.todoDataService.getFocusedTodos());
+    }
 
-# TodoApp
+    ngAfterContentInit () {
+      const node = document.getElementById('focus-mode')
+      elmApp = Elm.Main.embed(node)
+      elmApp.ports.done.subscribe(id => {
+        const todo = this.todoDataService.getTodoById(id)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0.
+        this.toggleTodoComplete(todo)
+      })
+    }
 
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class/module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+  }
+  ```
+- add the #focus-mode element to your angular template [./src/app/app.component.html](./src/app/app.component.html)
+  ```html
+  <section class="todoapp">
+    <div id="focus-mode"></div>
+    <!-- ... -->
+  </section>
+  ```
