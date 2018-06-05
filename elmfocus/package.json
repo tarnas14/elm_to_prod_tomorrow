@@ -4,7 +4,7 @@
     "prestart": "npm run build",
     "start": "xdg-open index.html"
   },
-  "dependencies": {
+  "devDependencies": {
     "elm": "^0.18.0"
   }
 }
