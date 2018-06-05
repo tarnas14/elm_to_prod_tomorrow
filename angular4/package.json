@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "build-elm": "cd ./src/elmfocus && npm run build",
+    "build-elm": "cd ./src/elmfocus && rm -rf node_modules && npm run build",
     "prestart": "npm run build-elm",
     "start": "webpack-dev-server --port=4200",
     "build": "npm run build-elm && webpack --display-error-details",
