@@ -1,6 +1,10 @@
 {
   "scripts": {
     "build": "elm-make Main.elm --output focus.js",
+    "prestart": "npm run build",
     "start": "xdg-open index.html"
+  },
+  "dependencies": {
+    "elm": "^0.18.0"
   }
 }
