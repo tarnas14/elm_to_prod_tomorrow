@@ -11,6 +11,8 @@ FROM: [https://github.com/tastejs/todomvc/tree/gh-pages/examples/vanillajs](http
 - reference elm in your app [./index.html](./index.html)
   ```html
   <script src="elmfocus/focus.js"></script>
+  ...
+  <div id="focus-app"></div>
   ```
 - embed your app [./js/elmFocusConnector.js](./js/elmFocusConnector.js)
   ```javascript
